@@ -6,11 +6,12 @@ function EmployeeController($scope,$http){
 	 $scope.employeePositions = [
          {positionName : "Direct", positionId : "1"},
          {positionName : "InDirect", positionId : "2"},
-         {positionName : "Program Manager", positionId : "3"}
+         {positionName : "Program Manager", positionId : "3"},
+         {positionName : "Director", positionId : "4"},
+         {positionName : "Executive", positionId : "5"}
      ];
 	 
 	$scope.stateList = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
-	$scope.booleanFalg = ['true','false'];
 	
 	$scope.master = {};
     	
@@ -32,11 +33,30 @@ function EmployeeController($scope,$http){
         $('#form_modal').modal('show');
     };
     
+    
     $scope.EditModal = function(employee) {
         $scope.form_name = 'Edit User Information';
         var edit_form = {};
 		angular.copy(employee, edit_form);
+
+		//The prepopulating the data for the radio button didn't work
+		//had to assign it.
+	
+		if(employee.activeFlag ){
+			edit_form.activeFlag = 'true';
+		}
+		else {
+			edit_form.activeFlag = 'false';
+		}
 		$scope.users_form = edit_form;
+		$scope.users_form.phoneNumber = Number(edit_form.phoneNumber);
+		var hiringDateInISO = edit_form.employeeHiringDate;
+		var date1=new Date(hiringDateInISO);
+		$scope.users_form.employeeHiringDate = date1;
+		if( Number(edit_form.zipCode) != 0) {
+			$scope.users_form.zipCode = Number(edit_form.zipCode);
+		}
+
 		$('#form_modal').modal('show');
     };
    
@@ -86,28 +106,11 @@ function EmployeeController($scope,$http){
         	addEmployee(employee);
         }
         
-
-        
-//        
-//        if(null != empInfo.id){
-//        	//alert("NOT NULL UPDATE employee ID: " + empInfo.id);
-//        	urlPost = $http.put('http://localhost:8080/demo/updateemployees', employee);
-//        }
-//        else{
-//        	//alert("NULL CREATE employee ID: " + empInfo.id);
-//        	urlPost = $http.post('http://localhost:8080/demo/createemployees', employee);
-//        }
-//        urlPost.then(function(response) {
-//            $scope.employeesInformation();
-//			$scope.success_msg = response.data;
-//        },function (error){
-//			console.log(error);
-//		});
        $('#form_modal').modal('hide');
     };
     
     $scope.DeleteModal = function(employee) {
-		var r = confirm("Are you sure want to delete ?");
+    	var r = confirm("Are you sure want to delete ?");
 		if (r == true) {
 			var employeeId = employee.id;
 			$http.delete('http://localhost:8080/demo/deleteemployees/'+employeeId)

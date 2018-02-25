@@ -19,8 +19,10 @@
 		<script type="text/javascript" src="./app/js/angularjs/angular.min.js"></script>
 		<script type="text/javascript" src="./app/js/angularjs/angular-datatables.min.js"></script>
 		<!-- <script type="text/javascript" src="./app/js/angularjs/users.angular.js"></script>  -->
+		
 	<!--/Angualrjs -->
 	 <script type="text/javascript" src="./app/employeeController.js"></script>  
+	 <style>.error {color: red;}</style>
 	 
 </head>
 <body>
@@ -99,14 +101,14 @@
           {{form_name}}</h4>
         </div>
         <!-- Form inside modal -->
-        <form  method="post" ng-submit="UserAddUpdate(users_form);" id="cat_form">
+        <form  method="post" ng-submit="UserAddUpdate(users_form);" id="update_form"/>
           <div class="modal-body with-padding">
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-12">
                   <label>First Name :</label>
                    <input type="text" name="firstName" ng-model="users_form.firstName" 
-						id="firstName" required="required" class="form-control">
+						id="firstName" required="required" class="form-control"/>
                 </div>
               </div>
             </div>            
@@ -115,7 +117,7 @@
                 <div class="col-sm-12">
                   <label>Middle Name :</label>
                    <input type="text" name="middleName" ng-model="users_form.middleName" 
-						id="middleName" required="required"  class="form-control">
+						id="middleName" class="form-control"/>
                 </div>
               </div>
             </div>
@@ -124,7 +126,7 @@
                 <div class="col-sm-12">
                   <label>Last Name :</label>
                    <input type="text" name="lastName" ng-model="users_form.lastName" 
-						id="lastName" required="required"  class="form-control">
+						id="lastName" required="required"  class="form-control"/>
                 </div>
               </div>
             </div>
@@ -132,20 +134,19 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>Email Address:</label>
-                   <input type="email" name="emailAddress" ng-model="users_form.emailAddress" 
-						id="emailAddress" required="required" class="form-control">
+                   <input type="email" name="emailAddress" ng-model="users_form.emailAddress" id="emailAddress" required="required" class="form-control"/>
                 </div>
               </div>
             </div>
-             <div class="form-group">
+              <div class="form-group">
               <div class="row">
                 <div class="col-sm-12">
                   <label>Phone Number :</label>
-                   <input type="number" name="phoneNumber" ng-model="users_form.phoneNumber" 
-						id="phoneNumber" ng-pattern="ph_numbr" class="form-control" >
+                   <input type="number" name="phoneNumber" ng-model="users_form.phoneNumber" id="phoneNumber" ng-pattern="/^\d{1,10}$/" class="form-control" />    
                 </div>
               </div>
             </div>
+           
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-12">
@@ -160,8 +161,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>Date Hired :</label>
-                   <input type="date" name="employeeHiringDate" ng-model="users_form.employeeHiringDate" 
-						id="employeeHiringDate" placeholder="yyyy-MM-dd" required="required" class="form-control" >
+                   <input type="date" name="employeeHiringDate" ng-model="users_form.employeeHiringDate" id="employeeHiringDate" placeholder="yyyy-MM-dd" required="required" class="form-control" />
                 </div>
               </div>
             </div>
@@ -169,7 +169,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>Address 1:</label>
-                   <input type="text" name="addressOne" ng-model="users_form.addressOne" id="addressOne" class="form-control">
+                   <input type="text" name="addressOne" ng-model="users_form.addressOne" id="addressOne" class="form-control"/>
                 </div>
               </div>
             </div>
@@ -177,7 +177,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>Address 2:</label>
-                   <input type="text" name="addressTwo" ng-model="users_form.addressTwo" id="addressTwo" class="form-control">
+                   <input type="text" name="addressTwo" ng-model="users_form.addressTwo" id="addressTwo" class="form-control"/>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>City:</label>
-                   <input type="text" name="city" ng-model="users_form.city" id="city" class="form-control">
+                   <input type="text" name="city" ng-model="users_form.city" id="city" class="form-control"/>
                 </div>
               </div>
             </div>
@@ -203,7 +203,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>Zip Code:</label>
-                   <input type='text' ng-model='users_form.zipCode' id='zipCode' ng-pattern='/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/' placeholder='' class="form-control" />
+                   <input type="number" ng-model="users_form.zipCode" id="zipCode" ng-pattern="/(^\d{5}$)/" placeholder="" class="form-control" ng-maxlength='5'/>
                 </div>
               </div>
             </div>
@@ -211,7 +211,8 @@
               <div class="row">
                 <div class="col-sm-12">
                   <label>Active Flag:</label>
-                   <input ng-model="users_form.activeFlag" ng-value="true" type="checkbox"> 
+                     <input type="radio" ng-model="users_form.activeFlag" value="true" ng-required="!users_form.activeFlag"> Yes
+                    <input type="radio" ng-model="users_form.activeFlag" value="false" ng-required="!users_form.activeFlag"> No
                  </div>
               </div>
             </div>
