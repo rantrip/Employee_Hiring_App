@@ -1,3 +1,5 @@
-/.setting
+/demo/.setting
 s/
-/target/
+/demo/.setting
+s/*.xml
+/demo/target/
