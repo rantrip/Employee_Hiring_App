@@ -4,9 +4,9 @@ describe('Employee Demo tests', function () {
         var $httpBackend;
         var $scope;
 
-        var employees = [{firstName: 'Ranjana', lastName: 'Tripathi'}, {firstName: 'Seema', lastName: 'Tripathi'}];
+        var employees = [{firstName: 'Ranjana', lastName: 'Tripathi', id: '1'}, {firstName: 'Seema', lastName: 'Tripathi',  id: '2'}];
         
-        beforeEach(module('employeesApp'));
+        beforeEach(module('demoApp'));
 
         beforeEach(inject(function(_$controller_, _$httpBackend_) {
           $controller = _$controller_;
@@ -14,14 +14,15 @@ describe('Employee Demo tests', function () {
           $httpBackend = _$httpBackend_;
         }));
 
+        
         describe('REST API Test : find all employees', function() {
 
           it('Should fetch all employees', function () {
             $httpBackend.expect('GET', 'http://localhost:8080/demo/employees').respond(employees);
             $controller('EmployeeController', { $scope: $scope });
-            $scope.getEmployeeData();
+            $scope.getAllEmployees();
             $httpBackend.flush();
-            expect($scope.employees).toEqual(employees);
+            expect($scope.employee_list).toEqual(employees);
           });
 
         });
@@ -65,9 +66,10 @@ describe('Employee Demo tests', function () {
                 
                 var $scope = {};
                 var employee = {firstName: 'Ranjana', lastName: 'Tripathi', id: '1'};
+                $scope.employee_list = employees;
                 $httpBackend.expect('DELETE', 'http://localhost:8080/demo/deleteemployees/'+employee.id).respond(employee.id);
                 $controller('EmployeeController', { $scope: $scope });
-                $scope.deleteEmployee(employee.id);
+                $scope.deleteEmployee(employee);
                 $httpBackend.flush();
                 expect($scope.success_msg).toEqual(employee.id);
 

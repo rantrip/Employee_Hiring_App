@@ -1,3 +1,4 @@
+angular.module('datatables', [])
 var myapp = angular.module('demoApp',['datatables']);
 myapp.controller('EmployeeController', EmployeeController);
 
@@ -15,18 +16,16 @@ function EmployeeController($scope,$http){
 	
 	$scope.master = {};
     	
-    var getAllEmployees= function getAllEmployees() {
+	$scope.getAllEmployees= function getAllEmployees() {
     	$http.get('http://localhost:8080/demo/employees').
          then(function (response){
             $scope.employee_list = [];
-            $scope.employee_list =response.data;   
+            $scope.employee_list = response.data;   
         },function (error){
                 console.log(error);
         });
     };
     
-    $scope.employeesInformation = getAllEmployees();
- 
     $scope.addModal = function() {
 		$scope.users_form = angular.copy($scope.master);
         $scope.form_name = 'Add New User Information';
@@ -62,20 +61,18 @@ function EmployeeController($scope,$http){
 		$('#form_modal').modal('show');
     };
    
-    var addEmployee = function addEmployee (employee){
+    $scope.addEmployee = function addEmployee (employee){
     	urlPost = $http.post('http://localhost:8080/demo/createemployees', employee);
     	urlPost.then(function(response) {
-        $scope.employeesInformation();
 		$scope.success_msg = response.data;
     },function (error){
 		console.log(error);
 	});
    }
     
-    var updateEmployee = function updateEmployee(employee) {
+    $scope.updateEmployee = function updateEmployee(employee) {
     	urlPost = $http.put('http://localhost:8080/demo/updateemployees', employee);
     	urlPost.then(function(response) {
-            $scope.employeesInformation();
 			$scope.success_msg = response.data;
         },function (error){
 			console.log(error);
@@ -103,28 +100,34 @@ function EmployeeController($scope,$http){
 		};
 		
         if(null != empInfo.id){
-        	updateEmployee(employee);       	
+        	$scope.updateEmployee(employee);  
         } else {
-        	addEmployee(employee);
+        	$scope.addEmployee(employee);
         }
         
        $('#form_modal').modal('hide');
+       location.reload();
     };
     
     $scope.DeleteModal = function(employee) {
     	var r = confirm("Are you sure want to delete ?");
 		if (r == true) {
-			var employeeId = employee.id;
-			$http.delete('http://localhost:8080/demo/deleteemployees/'+employeeId)
-			.then(function(response) {
-				var index = $scope.employee_list.indexOf(employee);
-				$scope.employee_list.splice(index, 1);	
-				$scope.success_msg = response.data;
-			},function (error){
-				console.log(error);
-			});
+			$scope.deleteEmployee(employee);
+			location.reload();
 		}
+	
     };
+    
+
+    $scope.deleteEmployee = function deleteEmployee(employee) {
+		$http.delete('http://localhost:8080/demo/deleteemployees/'+employee.id)
+		.then(function(response) {
+			var index = $scope.employee_list.indexOf(employee);
+			$scope.employee_list.splice(index, 1);	
+			$scope.success_msg = response.data;
+		},function (error){
+			console.log(error);
+		});
+    }
  
 };
-//});

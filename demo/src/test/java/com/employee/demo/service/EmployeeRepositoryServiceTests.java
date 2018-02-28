@@ -63,6 +63,7 @@ public class EmployeeRepositoryServiceTests {
 	
 	@Test
 	public void findAll() throws Exception {
+		deleteEmployeeData();
 		createEmployeeData();
 		List<Employee> employees = employeeRepositoryService.findAll();
         assertEquals(employees.size(), 2);

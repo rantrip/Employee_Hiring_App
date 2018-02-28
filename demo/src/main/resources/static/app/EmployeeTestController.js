@@ -5,9 +5,9 @@ app.controller('EmployeeController', function employeeController($scope, $http) 
 	$scope.getEmployeeData = function getEmployeeData() {
             	$http.get('http://localhost:8080/demo/employees').
                  then(function (response){
-                	 $scope.employees = response.data;
+                	 $scope.employee_list = response.data;
                 },function (error){
-                	$scope.employees = [];
+                	$scope.employee_list = [];
                     console.log(error);
                 });
             };  	
