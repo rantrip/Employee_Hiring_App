@@ -49,7 +49,9 @@ function EmployeeController($scope,$http){
 			edit_form.activeFlag = 'false';
 		}
 		$scope.users_form = edit_form;
-		$scope.users_form.phoneNumber = Number(edit_form.phoneNumber);
+		if( Number(edit_form.phoneNumber) != 0) {
+			$scope.users_form.phoneNumber = Number(edit_form.phoneNumber);
+		}
 		var hiringDateInISO = edit_form.employeeHiringDate;
 		var date1=new Date(hiringDateInISO);
 		$scope.users_form.employeeHiringDate = date1;

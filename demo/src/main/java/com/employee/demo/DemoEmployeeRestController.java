@@ -115,10 +115,11 @@ public class DemoEmployeeRestController {
 	 * @param id
 	 */
     @RequestMapping(path = "/demo/deleteemployees/{id}", method = RequestMethod.DELETE) 
-    public void deleteEmployee(@PathVariable String id) {
+    public String deleteEmployee(@PathVariable String id) {
     	logger.info("*************deleteEmployee:*************");
     	logger.info("DELETE Employee Object id: " + id);
 		employeeRepositoryService.delete(id); 
+		return id;
     }
     
 

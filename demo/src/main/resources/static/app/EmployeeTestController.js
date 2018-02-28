@@ -2,7 +2,7 @@ var app = angular.module('employeesApp', []);
 
 
 app.controller('EmployeeController', function employeeController($scope, $http) {
-        var getEmployeeData = function getEmployeeData() {
+	$scope.getEmployeeData = function getEmployeeData() {
             	$http.get('http://localhost:8080/demo/employees').
                  then(function (response){
                 	 $scope.employees = response.data;
@@ -15,11 +15,9 @@ app.controller('EmployeeController', function employeeController($scope, $http) 
         /* On Load */
         $scope.employees = [];
         
-         getEmployeeData(); 
-         
-         var employee;
+        var employee;
        //Add or update
-       var addEmployee = function addEmployee (employee){
+        $scope.addEmployee = function addEmployee (employee){
        	urlPost = $http.post('http://localhost:8080/demo/createemployees', employee);
        	urlPost.then(function(response) {
        	$scope.success_msg = response.data;
@@ -29,13 +27,22 @@ app.controller('EmployeeController', function employeeController($scope, $http) 
        }
 
        
-       var updateEmployee = function updateEmployee(employee) {
+        $scope.updateEmployee = function updateEmployee(employee) {
        	urlPost = $http.put('http://localhost:8080/demo/updateemployees', employee);
           urlPost.then(function(response) {
-               $scope.employeesInformation();
-       		$scope.success_msg = response.data;
+            $scope.success_msg = response.data;
            },function (error){
        		console.log(error);
        	}); 
        }
+        
+       var employeeId ='1';
+       $scope.deleteEmployee = function deleteEmployee(employeeId){
+    	   $http.delete('http://localhost:8080/demo/deleteemployees/'+employeeId)
+			.then(function(response) {
+				$scope.success_msg = response.data;
+			},function (error){
+				console.log(error);
+			});
+       } 
   });
