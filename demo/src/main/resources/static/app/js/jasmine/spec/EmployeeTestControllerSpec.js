@@ -43,7 +43,7 @@ describe('Employee Demo tests', function () {
                });
                 /* End Code */
                	
-                $httpBackend.when('POST', 'http://localhost:8080/demo/createemployees', employee).respond(employee.id);
+                $httpBackend.expect('POST', 'http://localhost:8080/demo/createemployees', employee).respond(employee.id);
                 $httpBackend.flush();
                 expect($scope.success_msg).toEqual(employee.id);
 

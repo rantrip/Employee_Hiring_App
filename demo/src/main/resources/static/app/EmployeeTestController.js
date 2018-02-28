@@ -28,6 +28,7 @@ app.controller('EmployeeController', function employeeController($scope, $http) 
        });
        }
 
+       
        var updateEmployee = function updateEmployee(employee) {
        	urlPost = $http.put('http://localhost:8080/demo/updateemployees', employee);
           urlPost.then(function(response) {
