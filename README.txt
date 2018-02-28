@@ -31,6 +31,7 @@ Git:
 MongoDB:
 ********
    Install MongoDB. (Remember directory structure)
+   create folder C:\data\db
    Add MongodDB's bin directory to the Environment Variable's PATH
    Open command prompt.
    At prompt give the command 'mongod' 
