@@ -17,8 +17,8 @@ describe('Employee Demo tests', function () {
         describe('REST API Test : find all employees', function() {
 
           it('Should fetch all employees', function () {
-            $httpBackend.when('GET', 'http://localhost:8080/demo/employees').respond(employees);
-            $httpBackend.expect('GET', 'http://localhost:8080/demo/employees');
+           // $httpBackend.when('GET', 'http://localhost:8080/demo/employees').respond(employees);
+            $httpBackend.expect('GET', 'http://localhost:8080/demo/employees').respond(employees);
             $controller('EmployeeController', { $scope: $scope });
             $httpBackend.flush();
             expect($scope.employees).toEqual(employees);
